@@ -76,3 +76,7 @@ body {
 .buy-btn:hover {
   background-color: rgb(207, 93, 93);
 }
+
+.product-item__photo {
+  width: 100%;
+}
