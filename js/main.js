@@ -1,29 +1,44 @@
-const products = [
-    {id: 1, title: 'Notebook', price: 2000},
-    {id: 2, title: 'Mouse', price: 20},
-    {id: 3, title: 'Keyboard', price: 200},
-    {id: 4, title: 'Gamepad', price: 50},
-];
-//Функция для формирования верстки каждого товара
-//Добавить в выводе изображение
-const renderProduct = ({title = 'untitled', price = 0}, image='./img/no-image.jpg') => {
-    return `<div class="product-item">
-                <img class="product-item__photo" src="${image}" alt="${title}"> 
-                <h3 class="product-item__title">${title}</h3>
-                <p class="product-item__price">${price}</p>
+class Product {
+    static count = 0;
+    constructor(title, price) {
+        this.id = ++Product.count;
+        this.title = title;
+        this.price = price;
+    }
+    render(image='./img/no-image.jpg') {
+        return `<div class="product-item">
+                <img class="product-item__photo" src="${image}" alt="${this.title}"> 
+                <h3 class="product-item__title">${this.title}</h3>
+                <p class="product-item__price">${this.price}</p>
                 <button class="buy-btn">Купить</button>
             </div>`
-};
-const renderPage = list => {
-    const productsList = list.map(item => renderProduct(item));
-    console.log(productsList);
-    document.querySelector('.products').innerHTML = productsList.join('');
-};
+    }
+}
+class GoodsList {
+    constructor(products = []) {
+        this.products = products;
+    }
+    addProduct(product) {
+        this.products.push(product);
+    }
+    removeProduct(productID) {
+        this.products = this.products.filter(product => product.id !== productID);
+    }
+    getTotalPrice() {
+        let totalPrice = 0;
+        this.products.forEach(product => totalPrice += product.price);
+        return totalPrice;
+    }
+    render() {
+        const productsList = this.products.map(item => item.render());
+        console.log(productsList);
+        document.querySelector('.products').innerHTML = productsList.join('');
+    }
+}
+const products = new GoodsList();
+products.addProduct(new Product('Notebook', 2000));
+products.addProduct(new Product('Mouse', 20));
+products.addProduct(new Product('Keyboard', 200));
+products.addProduct(new Product('Gamepad', 50));
 
-/* Ответ на задание 3.
-Запятая появлялась по причине того, что в свойство innerHTML мы помещали массив.
-Для решения этой проблемы можно перебрать массив и добавить к innerHTML каждый из элементов. 
-Но если товаров много, такой способ будет не очень продуктивным. Поэтому просто с помощью join 
-склеим массив строк в одну строку */
-
-renderPage(products);
+products.render();
