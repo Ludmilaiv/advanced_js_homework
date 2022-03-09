@@ -42,3 +42,94 @@ products.addProduct(new Product('Keyboard', 200));
 products.addProduct(new Product('Gamepad', 50));
 
 products.render();
+
+// *Задание 3
+
+class Hamburger {
+    constructor(size = 'small', stuffing = null) { 
+        if (size === 'big') {
+            this.price = 50;
+            this.calories = 20;
+        } else if (size === 'small') {
+            this.price = 100;
+            this.calories = 40;
+        } 
+        if (stuffing === 'cheese') {
+            this.price += 10;
+            this.calories += 20;
+        } else if (stuffing === 'salad') {
+            this.price += 20;
+            this.calories += 5;
+        } else if (stuffing === 'potato') {
+            this.price += 15;
+            this.calories += 10;
+        }
+        this.size = size;
+        this.stuffing = stuffing;
+        this.toppings = [];
+    }
+    addTopping(topping = 'mayonnaise') {
+        this.toppings.push(topping);
+    }
+    removeTopping(topping) {
+        if (topping === 'seasoning') {
+            this.price -= 15;
+        } else {
+            this.price -= 20;
+            this.calories -= 5;
+        }
+        this.toppings = this.toppings.filter(item => item !== topping);
+    }
+    getToppings() {
+        return this.toppings;
+    }
+    getSize() {
+        return this.size;
+    }
+    getStuffing() {
+        return this.stuffing;
+    }
+    calculatePrice() {
+        if (this.size === 'big') {
+            this.price = 50;
+        } else if (size === 'small') {
+            this.price = 100;
+        } 
+        if (this.stuffing === 'cheese') {
+            this.price += 10;
+        } else if (this.stuffing === 'salad') {
+            this.price += 20;
+        } else if (this.stuffing === 'potato') {
+            this.price += 15;
+        }
+        if (this.toppings.includes('seasoning')) {
+            this.price += 15;
+        } 
+        if (this.toppings.includes('mayonnaise')) {
+            this.price += 20;
+        }
+        return this.price;
+    }
+    calculateCalories() {
+        if (this.size === 'big') {
+            this.calories = 20;
+        } else if (size === 'small') {
+            this.calories = 40;
+        } 
+        if (this.stuffing === 'cheese') {
+            this.calories += 20;
+        } else if (this.stuffing === 'salad') {
+            this.calories += 5;
+        } else if (this.stuffing === 'potato') {
+            this.calories += 10;
+        }
+        if (this.toppings.includes('mayonnaise')) {
+            this.calories += 5;
+        }
+        return this.price;
+    }
+  }
+
+  const burger = new Hamburger('big', 'salad');
+  burger.addTopping('mayonnaise');
+  console.log(burger.getSize(), burger.getStuffing(), burger.getToppings(), burger.calculatePrice(), burger.calculateCalories());
