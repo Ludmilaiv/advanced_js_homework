@@ -1,17 +1,23 @@
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
 class ProductList{
     constructor(container='.products'){
         this.container = container;
         this.goods = [];
-        this._fetchProducts();//рекомендация, чтобы метод был вызван в текущем классе
-        this.render();//вывод товаров на страницу
+        this._getProducts()
+            .then(data => {
+                this.goods = data;  
+                this.render();
+            });
     }
-    _fetchProducts(){
-        this.goods = [
-            {id: 1, title: 'Notebook', price: 2000},
-            {id: 2, title: 'Mouse', price: 20},
-            {id: 3, title: 'Keyboard', price: 200},
-            {id: 4, title: 'Gamepad', price: 50},
-        ];
+    _getProducts(){
+      
+        return fetch(`${API}/catalogData.json`)
+            .then(result => result.json())
+            .catch(error => {
+                console.log(error);
+            });
+       
     }
     getTotalPrice() {
         return this.totalPrice = this.goods.forEach(product => totalPrice += product.price);
@@ -26,123 +32,62 @@ class ProductList{
 }
 
 class ProductItem{
-    constructor(product,img='./img/no-image.jpg'){
-        this.title = product.title;
-        this.id = product.id;
+    constructor(product, block='product',img='./img/no-image.jpg'){
+        this.block = block;
+        this.title = product.product_name;
+        this.id = product.id_product;
         this.price = product.price;
         this.img = img;
+        this.quantity = product.quantity;
     }
     render(){
-        return `<div class="product-item">
-                <img class="product-item__photo" src="${this.img}" alt="${this.title}"> 
-                <h3 class="product-item__title">${this.title}</h3>
-                <p class="product-item__price">${this.price}</p>
-                <button class="buy-btn">Купить</button>
+        return `<div class="${this.block}-item">
+                <img class="${this.block}-item__photo" src="${this.img}" alt="${this.title}"> 
+                <h3 class="${this.block}-item__title">${this.title}</h3>
+                <p class="${this.block}-item__price">${this.price}</p>
+                ${(this.block === 'product') ? '<button class="buy-btn">Купить</button>' : `<span class="cart-item__quantity">${this.quantity}</span>`}
             </div>`
     }
 }
 
-class CartList {
-    constructor() {
-        this.products = new ProductList('.cart');
+class CartList{
+    constructor(container='.cart__container'){
+        this.container = container;
+        this.goods = [];
+        this._getBasket()
+            .then(data => {
+                this.amount = data.amount;
+                this.countGoods = data.countGoods;
+                this.goods = data.contents;
+                this.render();
+            });
     }
-    addProduct(product) {
-        this.products.goods.push(product);
+    _getBasket(){
+      
+        return fetch(`${API}/getBasket.json`)
+            .then(result => result.json())
+            .catch(error => {
+                console.log(error);
+            });
+       
     }
-    removeProduct(productID) {
-        this.products.goods = this.products.goods.filter(product => product.id !== productID);
+
+    render(){
+        const block = document.querySelector(this.container);
+        for(let product of this.goods){
+            const item = new ProductItem(product, 'cart');
+            block.insertAdjacentHTML("beforeend",item.render());
+       }
+       block.insertAdjacentHTML("beforeend",`<div class="cart__total">Общая стоимость:${this.amount}</div>`);
     }
 }
 
 let list = new ProductList();
+let cart = new CartList();
 
-// *Задание 3
-
-class Hamburger {
-    constructor(size = 'small', stuffing = null) { 
-        if (size === 'big') {
-            this.price = 50;
-            this.calories = 20;
-        } else if (size === 'small') {
-            this.price = 100;
-            this.calories = 40;
-        } 
-        if (stuffing === 'cheese') {
-            this.price += 10;
-            this.calories += 20;
-        } else if (stuffing === 'salad') {
-            this.price += 20;
-            this.calories += 5;
-        } else if (stuffing === 'potato') {
-            this.price += 15;
-            this.calories += 10;
-        }
-        this.size = size;
-        this.stuffing = stuffing;
-        this.toppings = [];
-    }
-    addTopping(topping = 'mayonnaise') {
-        this.toppings.push(topping);
-    }
-    removeTopping(topping) {
-        if (topping === 'seasoning') {
-            this.price -= 15;
-        } else {
-            this.price -= 20;
-            this.calories -= 5;
-        }
-        this.toppings = this.toppings.filter(item => item !== topping);
-    }
-    getToppings() {
-        return this.toppings;
-    }
-    getSize() {
-        return this.size;
-    }
-    getStuffing() {
-        return this.stuffing;
-    }
-    calculatePrice() {
-        if (this.size === 'big') {
-            this.price = 50;
-        } else if (size === 'small') {
-            this.price = 100;
-        } 
-        if (this.stuffing === 'cheese') {
-            this.price += 10;
-        } else if (this.stuffing === 'salad') {
-            this.price += 20;
-        } else if (this.stuffing === 'potato') {
-            this.price += 15;
-        }
-        if (this.toppings.includes('seasoning')) {
-            this.price += 15;
-        } 
-        if (this.toppings.includes('mayonnaise')) {
-            this.price += 20;
-        }
-        return this.price;
-    }
-    calculateCalories() {
-        if (this.size === 'big') {
-            this.calories = 20;
-        } else if (size === 'small') {
-            this.calories = 40;
-        } 
-        if (this.stuffing === 'cheese') {
-            this.calories += 20;
-        } else if (this.stuffing === 'salad') {
-            this.calories += 5;
-        } else if (this.stuffing === 'potato') {
-            this.calories += 10;
-        }
-        if (this.toppings.includes('mayonnaise')) {
-            this.calories += 5;
-        }
-        return this.price;
-    }
-  }
-
-  const burger = new Hamburger('big', 'salad');
-  burger.addTopping('mayonnaise');
-  console.log(burger.getSize(), burger.getStuffing(), burger.getToppings(), burger.calculatePrice(), burger.calculateCalories());
+document.addEventListener('DOMContentLoaded', () => {
+    const cartPopup = document.querySelector('.cart');
+    document.querySelector('.btn-cart').addEventListener('click', () => {
+        cartPopup.classList.toggle('cart_show');
+    })
+})
