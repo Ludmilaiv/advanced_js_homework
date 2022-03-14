@@ -50,7 +50,7 @@ class CartList {
         this.products.goods.push(product);
     }
     removeProduct(productID) {
-        this.products = this.products.goods.filter(product => product.id !== productID);
+        this.products.goods = this.products.goods.filter(product => product.id !== productID);
     }
 }
 
