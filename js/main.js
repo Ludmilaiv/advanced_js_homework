@@ -13,7 +13,9 @@ class ProductList{
             {id: 4, title: 'Gamepad', price: 50},
         ];
     }
-    
+    getTotalPrice() {
+        return this.totalPrice = this.goods.forEach(product => totalPrice += product.price);
+    }
     render(){
         const block = document.querySelector(this.container);
         for(let product of this.goods){
@@ -41,19 +43,14 @@ class ProductItem{
 }
 
 class CartList {
-    constructor(products = []) {
-        this.products = products;
+    constructor() {
+        this.products = new ProductList('.cart');
     }
     addProduct(product) {
-        this.products.push(product);
+        this.products.goods.push(product);
     }
     removeProduct(productID) {
-        this.products = this.products.filter(product => product.id !== productID);
-    }
-    getTotalPrice() {
-        let totalPrice = 0;
-        this.products.forEach(product => totalPrice += product.price);
-        return totalPrice;
+        this.products = this.products.goods.filter(product => product.id !== productID);
     }
 }
 
