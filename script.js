@@ -22,9 +22,9 @@ text = text.replace(reg, '"');
 alert(`Задания 1 и 2:\n\n ${text}`);
 
 const regs = {
-  name: /(\w|[а-яА-ЯёЁ])+/i,
-  phone: /\+7\(\d{3}\)\d{3}-\d{4}/i,
-  email: /\w|\d+(\.|-){0,1}\w|d+@\w+\.\w{2,3}/i
+  name: /^(\w|[а-яА-ЯёЁ])+$/i,
+  phone: /^\+7\(\d{3}\)\d{3}-\d{4}$/i,
+  email: /^\w+(\.|-){0,1}\w+@\w+\.\w{2,3}$/i
 }
 
 const clearError = (i) => {
