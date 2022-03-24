@@ -38,15 +38,10 @@
     </header>
     <main>
         <div class="products">
-            <div class="product-item" v-if="show" v-for="product of filtered" :key="product.id_product">
-                <img :src="imgCatalog" alt="Some img">
-                <div class="desc">
-                    <h3>{{product.product_name}}</h3>
-                    <p>{{product.price}} $</p>
-                    <button class="buy-btn" @click="addProduct(product)">Купить</button>
-                </div>
+            <div v-if="show ? !filtered.length : !products.length" class="product-item product-item-empty">
+                <h3>Нет данных</h3>
             </div>
-            <div class="product-item" v-if="!show" v-for="product of products" :key="product.id_product">
+            <div class="product-item" v-for="product of (show ? filtered : products)" :key="product.id_product">
                 <img :src="imgCatalog" alt="Some img">
                 <div class="desc">
                     <h3>{{product.product_name}}</h3>
