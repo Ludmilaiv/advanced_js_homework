@@ -18,6 +18,9 @@
                 </button>
             </form>
             <button class="btn-cart" type="button" @click="showCart">Корзина</button>
+            <div v-if="isVisibleCart && !cart.contents.length" class="cart-block cart-block-empty">
+                <h3>Корзина пуста</h3>
+            </div>
             <div v-if="isVisibleCart" v-for="product of cart.contents" class="cart-block">
                 <div class="cart-item">
                     <div class="product-bio">
