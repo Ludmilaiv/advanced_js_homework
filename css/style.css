@@ -82,10 +82,6 @@ img {
     width: 300px;
 }
 
-.cart-block img {
-    max-width: 80px;
-}
-
 .invisible{
     display: none;
 }
