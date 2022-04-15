@@ -8,8 +8,9 @@ let change = (cart, req) => {
     return JSON.stringify(cart, null, 4);
 };
 let remove = (cart, req) => {
-    let newCart = cart.contents.filter(el => +el.id !== +cart.id);
-    return JSON.stringify(newCart, null, 4);
+    let cartContent = cart.contents.filter(el => +el.id_product !== +req.params.id);
+    cart.contents = cartContent;
+    return JSON.stringify(cart, null, 4);
 };
 
 module.exports = {
