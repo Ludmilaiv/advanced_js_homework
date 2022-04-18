@@ -1,6 +1,6 @@
 // const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
-Vue.component('cart', {
+const Cart = Vue.component('cart', {
     data(){
       return {
           cartUrl: '/getBasket.json',
@@ -145,7 +145,7 @@ Vue.component('cart', {
     `
 });
 
-Vue.component('cart-item', {
+const CartItem = Vue.component('cart-item', {
     props: ['img', 'cartItem'],
     template: `
 
@@ -166,3 +166,8 @@ Vue.component('cart-item', {
     </li>
     `
 })
+
+export default {
+    Cart: Cart,
+    CartItem: CartItem
+}

@@ -1,4 +1,4 @@
-Vue.component('error', {
+const Error = Vue.component('error', {
     data(){
         return {
           text: ''
@@ -18,3 +18,7 @@ Vue.component('error', {
 </div>
     `
 })
+
+export default {
+  Error: Error
+}

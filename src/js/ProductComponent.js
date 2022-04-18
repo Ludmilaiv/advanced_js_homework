@@ -1,4 +1,4 @@
-Vue.component('products', {
+const Products = Vue.component('products', {
    data(){
        return {
            catalogUrl: '/catalogData.json',
@@ -31,7 +31,7 @@ Vue.component('products', {
                 @add-product="$parent.$refs.cart.addProduct"></product>
             </ul>`
 });
-Vue.component('product', {
+const Product = Vue.component('product', {
     props: ['product', 'img'],
     template: `
         <li class="products__item">
@@ -50,3 +50,8 @@ Vue.component('product', {
         </li>
     `
 })
+
+export default {
+    Products: Products,
+    Product: Product
+}
