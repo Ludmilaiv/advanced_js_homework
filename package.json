@@ -1,0 +1,28 @@
+{
+  "name": "project_express",
+  "version": "1.0.0",
+  "description": "Практическая работа по курсу \"Продвинутый курс Javascript\" от GeekBrains.\r Каждое задание выполнено в отдельной ветке",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack -w",
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ludmilaiv/advanced_js_homework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ludmilaiv/advanced_js_homework/issues"
+  },
+  "homepage": "https://github.com/Ludmilaiv/advanced_js_homework#readme"
+}
